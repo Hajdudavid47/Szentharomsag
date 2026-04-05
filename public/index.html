@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Szentháromság Evangéliumi Gyülekezet</title>
+  <meta name="description" content="Szentháromság Evangéliumi Gyülekezet – „teljes Krisztus, az élet teljességére”. Teremtés · Kultúra · Liturgia. Hitvallásaink, történetünk, vezetőségünk és kapcsolat." />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Szentháromság Evangéliumi Gyülekezet" />
+  <meta property="og:title" content="Szentháromság Evangéliumi Gyülekezet" />
+  <meta property="og:description" content="„teljes Krisztus, az élet teljességére” – Teremtés · Kultúra · Liturgia." />
+  <meta property="og:image" content="img/gyuli.png" />
+
+  <link rel="icon" type="image/png" href="img/logo.png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="img/logo.png" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --brand-dark: #0e0f11;
+      --brand-gold: #ffde59;
+      --brand-light: #f8f9fa;
+    }
+
+    html { 
+      scroll-behavior: smooth;
+      scroll-padding-top: 70px;
+    }
+    body { font-family: "Merriweather", serif; color: #0f1115; background: #fff; }
+
+    .navbar { 
+      background: rgba(0,0,0,.85)!important; 
+      backdrop-filter: saturate(140%) blur(6px); 
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      height: 70px;
+    }
+    .navbar-brand {
+        flex-shrink: 1;
+        min-width: 0;
+        margin-right: 0.5rem;
+    }
+    .navbar-brand span {
+        white-space: normal;
+        word-break: break-word;
+    }
+    .navbar .nav-link { font-weight: 700; letter-spacing: .2px; }
+    .navbar .nav-link:hover { color: var(--brand-gold)!important; text-shadow: 0 0 6px rgba(255,222,89,.45); }
+    .lang-toggle {
+        color: rgba(255,255,255,.55);
+        padding: 0.5rem 0.5rem;
+        margin-left: 0.5rem;
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+    .lang-toggle:hover {
+        color: var(--brand-gold)!important;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; color: #fff;
+      background-image: linear-gradient(180deg,rgba(0,0,0,.7),rgba(0,0,0,.55)), url('img/Kereszt.png');
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative; overflow: hidden;
+    }
+    .hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 60% at 50% 40%,rgba(255,255,255,.08),transparent 60%); }
+    .glass { background: rgba(10,11,14,.55); border: 1px solid rgba(255,255,255,.08); box-shadow: 0 10px 40px rgba(0,0,0,.45); border-radius: 16px; backdrop-filter: blur(8px); }
+    .display-quote { font-weight: 900; letter-spacing: .3px; line-height: 1.25; text-shadow: 0 2px 18px rgba(0,0,0,.6); }
+    .sublead { opacity: .95; font-weight: 600; letter-spacing: .3px; }
+
+    .chip {
+      border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); color: #fff;
+      font-weight: 700; letter-spacing: .3px; padding: .7rem 1.1rem; border-radius: 999px; text-decoration: none;
+      transition: transform .15s,box-shadow .15s,border-color .15s,color .15s; white-space: nowrap;
+    }
+    .chip:hover, .chip:active, .chip:focus { 
+      color: #000; 
+      background: var(--brand-gold); 
+      border-color: var(--brand-gold); 
+      box-shadow: 0 0 22px rgba(255,222,89,.35); 
+      transform: translateY(-1px); 
+    }
+
+    .section { padding: 72px 0; }
+    .section-title { font-weight: 900; letter-spacing: .3px; }
+    .section-underline { width: 120px; height: 4px; border-radius: 4px; background: var(--brand-gold); box-shadow: 0 0 12px rgba(255,222,89,.45); margin: .25rem auto 2.5rem; }
+    .content p, .content li {
+        text-align: justify;
+        text-justify: inter-word;
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+    }
+
+    .team-card { border: 0; box-shadow: 0 8px 26px rgba(0,0,0,.08); border-radius: 16px; overflow: hidden; transition: transform .18s,box-shadow .18s; }
+    .team-card:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,.12); }
+    .team-photo { height: auto; width: 100%; object-fit: contain; background: #000; }
+    .badge-role { background: var(--brand-gold); color: #111; font-weight: 800; letter-spacing: .3px; }
+
+    .feature { border: 1px solid rgba(0,0,0,.06); border-radius: 14px; padding: 1.25rem; background: #fff; transition: border-color .2s,box-shadow .2s,transform .2s; }
+    .feature:hover { border-color: rgba(255,222,89,.75); box-shadow: 0 10px 26px rgba(255,222,89,.18); transform: translateY(-2px); }
+    .feature i { font-size: 1.6rem; color: var(--brand-gold); }
+
+    .accordion-item { border-radius: 12px!important; overflow: hidden; border: 1px solid rgba(0,0,0,.06)!important; background: #fff; box-shadow: 0 8px 20px rgba(0,0,0,.05); }
+    .accordion-button { font-weight: 800; letter-spacing: .3px; }
+    .accordion-button:not(.collapsed) { color: #111; background: linear-gradient(0deg,rgba(255,222,89,.25),rgba(255,222,89,.18)); border-bottom: 1px solid rgba(0,0,0,.05); box-shadow: inset 0 -1px 0 rgba(0,0,0,.05); }
+
+    .cover-img { width: 100%; height: 360px; object-fit: cover; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.1); }
+
+    .crec-logo {
+        display: block;
+        max-width: 85%;
+        max-height: 380px;
+        height: auto;
+        object-fit: contain;
+        margin: 0 auto;
+    }
+
+    footer { 
+      background: #0c0d10; 
+      color: #e9eaed; 
+      padding: 48px 0; 
+    }
+    .footer-link { color: #e9eaed; text-decoration: none; margin: 0 10px; }
+    .footer-link:hover { color: var(--brand-gold); text-shadow: 0 0 8px rgba(255,222,89,.4); }
+    .footer-dot { opacity: .85; margin: 0 .35rem; }
+
+    #toTop { position: fixed; right: 16px; bottom: 16px; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(0,0,0,.2); background: #000; color: #fff; display: grid; place-content: center; box-shadow: 0 10px 28px rgba(0,0,0,.25); cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(12px); transition: all .2s; z-index: 1030; }
+    #toTop.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    #toTop:hover { background: var(--brand-gold); color: #111; border-color: var(--brand-gold); box-shadow: 0 0 22px rgba(255,222,89,.35); }
+
+    @media (max-width: 991.98px) {
+        .navbar {
+            height: auto;
+        }
+        .navbar-brand span {
+            font-size: 0.9rem;
+        }
+        .hero {
+             background-attachment: scroll;
+        }
+    }
+    @media (max-width: 575.98px) {
+      .display-quote { font-size: 1.9rem; }
+      .sublead { font-size: 1rem; }
+      .chip { padding: .6rem .95rem; }
+      .navbar-brand span {
+          font-size: 0.8rem;
+      }
+    }
+    @media (min-width: 992px) {
+        .crec-section-row {
+            align-items: center;
+        }
+    }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D376DPET82"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-D376DPET82');
+  </script>
+</head>
+<body>
+
+  <nav class="navbar navbar-dark navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 flex-grow-1" href="#">
+        <img src="img/logo.png" alt="Logo" height="28" />
+        <span class="fw-black">Szentháromság Evangéliumi Gyülekezet</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav" aria-controls="topNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="topNav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="pred.html">Igehirdetések és Közvetítések</a></li>
+          <li class="nav-item"><a class="nav-link" href="cikk.html">Cikkek</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Kapcsolat</a></li>
+          <li class="nav-item">
+            <a class="nav-link lang-toggle" href="index-en.html" title="Switch to English">EN</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<header class="hero">
+    <div class="container position-relative" style="z-index: 1;">
+      <div class="row justify-content-center">
+        <div class="col-xl-9 col-lg-10">
+          <div class="glass p-4 p-md-5">
+            <h1 class="display-quote text-center mb-3">A teljes Krisztus, az élet teljességére</h1>
+            <p class="sublead text-center mb-4">Teremtés · Kultúra · Liturgia</p>
+            <div class="d-flex flex-wrap gap-2 gap-md-3 justify-content-center">
+              <a class="chip" href="#alkalmak">Alkalmaink</a>
+              <a class="chip" href="#kik">Kik vagyunk</a>
+              <a class="chip" href="#vezetoseg">Vezetőség</a>
+              <a class="chip" href="#history">Történetünk</a>
+              <a class="chip" href="#creeds">Hitvallásaink</a>
+              <a class="chip" href="#contact">Kapcsolat</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="kik" class="section">
+    <div class="container">
+      <h2 class="section-title text-center">Kik vagyunk</h2>
+      <div class="section-underline"></div>
+
+      <div class="row g-4 mb-4">
+        <div class="col-md-4">
+          <div class="feature h-100">
+            <div class="d-flex align-items-start gap-3">
+              <i class="bi bi-brightness-high"></i>
+              <div class="content">
+                <h5 class="fw-bold mb-2">Teremtés</h5>
+                <p class="mb-0">A Biblia egy nagy narratívát mesél el, a Kertből Isten Városává váló történetet. Ezért a Biblia minden részét és részletét ennek az egyetlen történetnek a kontextusában kell olvasnunk.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="feature h-100">
+            <div class="d-flex align-items-start gap-3">
+              <i class="bi bi-building"></i>
+              <div class="content">
+                <h5 class="fw-bold mb-2">Kultúra</h5>
+                <p class="mb-0">A Biblia története a világ teremtésével kezdődik, és Ádám elhívásával, hogy átalakítsa a földet a Menny mintája szerint, az éretlen dicsőségtől az érett dicsőség felé haladva.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="feature h-100">
+            <div class="d-flex align-items-start gap-3">
+              <i class="bi bi-book"></i>
+              <div class="content">
+                <h5 class="fw-bold mb-2">Liturgia</h5>
+                <p class="mb-0">A történelem csak akkor halad a Kert dicsőségétől a Város dicsősége felé, ha Isten találkozik népével, egyesíti őket önmagával, és ezáltal Krisztus Jézusban, a Szentlélek által, megadja nekik életét és bölcsességét.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-center text-muted mb-4">
+        A Szentháromság Evangéliumi Gyülekezetben a következő gondolatok alkotják identitásunk magját:
+      </p>
+
+      <div class="accordion" id="kikAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="kikOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kikCollapseOne" aria-expanded="false" aria-controls="kikCollapseOne">
+              1. Teremtés
+            </button>
+          </h2>
+          <div id="kikCollapseOne" class="accordion-collapse collapse" aria-labelledby="kikOne" data-bs-parent="#kikAccordion">
+            <div class="accordion-body content">
+              <p>A Biblia egy történetet mesél el, amit „Kerttől a Városig” nevezhetünk. Az ember történelme az Édenkertben, az első földi szentélyben kezdődik, és szövetségeken és istentiszteleteken keresztül halad a Új Jeruzsálem felé. Ezért a Szentírás olvasásának mindig a teremtéstörténetben kell gyökereznie, és tiszteletben kell tartania annak liturgikus áramlását, nyomon követve a tipológiai mintákat, mint a fák és templomok, kenyér és bor, amelyek feltárják Isten tervét, hogy az ember a vele való közösségen keresztül dicsőítse a teremtést.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item mt-3">
+          <h2 class="accordion-header" id="kikTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kikCollapseTwo" aria-expanded="false" aria-controls="kikCollapseTwo">
+              2. Kultúra
+            </button>
+          </h2>
+          <div id="kikCollapseTwo" class="accordion-collapse collapse" aria-labelledby="kikTwo" data-bs-parent="#kikAccordion">
+            <div class="accordion-body content">
+              <p>Az ember eredeti elhívása az volt, hogy átalakítsa a teljes teremtést, hogy az egyre inkább tükrözze a Menny dicsőségét. A bűn, ami az ember lázadása Isten ellen, eltorzította ezt az elhívást. Azonban Krisztusban ez az elhívás helyreállt. Most, mint pap-király, a férfiak munkájukat a Kert művelésével és védelmével végzik; és mint menyasszony-királynő, a nők a munkájukat a Kert díszítésével és dicsőítésével végzik. Együtt pedig az elhívásuk az, hogy betöltsék a teremtést Isten dicsőségével és ismeretével. Az ember, férfi és nő együtt, Isten képmásaként újra átrendezi a világot, az éretlen dicsőségtől az érett dicsőség felé haladva, hogy a föld egy nap tükrözze a mennyei mintákat.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item mt-3">
+          <h2 class="accordion-header" id="kikThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kikCollapseThree" aria-expanded="false" aria-controls="kikCollapseThree">
+              3. Liturgia
+            </button>
+          </h2>
+          <div id="kikCollapseThree" class="accordion-collapse collapse" aria-labelledby="kikThree" data-bs-parent="#kikAccordion">
+            <div class="accordion-body content">
+              <p>A Kerttől az Isten Városává történő haladás nemcsak a történelem folyását mutatja, hanem hangsúlyozza, hogy Isten különleges jelenlétének öröme az Istentiszteletben, amit férfiak vezetnek, alakítja a kultúrát és az ember életét. Az istentisztelet alatt Isten helyreállít bennünket dicsőségre, bölcsességre tanít, és táplál minket, a Szentlélek által, Krisztus feltámadt életével. Ezért az ember törekvései – különösen, de nem a teljesesség igényével; pl. művészet, munka, család, oktatás, kormányzás – az istentiszteletből fakadnak. Krisztus helyreállítja az igazi istentiszteletet, lehetővé téve egy érett társadalmat, ahol az élet minden része dicséretként kínálkozik Istennek, ami a tökéletesített és dicsőséges Új Jeruzsálemben teljesedik ki.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5 text-center content" style="max-width:900px;margin:auto;">
+        <p class="fst-italic">
+          A teremtés, kultúra és liturgia Krisztus Jézus személyében és munkájában áll össze. Mert a teljes teremtés Krisztus által (teremtés) és Krisztusért (kultúra) lett megalkotva, Krisztus pedig maga az eszköz (liturgia), amellyel Isten minden mindenekben lesz (Kol 1,15-18 és 1Kor 15,28). Ezért a „ teljes Krisztus, az élet teljességére ” kifejezés foglalja össze mindazt, akik vagyunk (küldetésünk) és mindazt, amit teszünk (jövőképünk) a Szentháromság Evangéliumi Gyülekezetben.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="alkalmak" class="section" style="background:#fafbfc;">
+    <div class="container">
+      <h2 class="section-title text-center">Rendszeres Alkalmaink</h2>
+      <div class="section-underline"></div>
+
+      <div class="row g-4 justify-content-center mt-2">
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm feature bg-white">
+            <div class="card-body text-center p-4">
+              <i class="bi bi-book-fill fs-1 mb-3 d-block" style="color: var(--brand-gold);"></i>
+              <h5 class="fw-bold mb-3">Istentisztelet</h5>
+              <p class="mb-2">Minden vasárnap 10:00-kor</p>
+              <p class="small text-muted mb-0">
+                <i class="bi bi-geo-alt-fill me-1"></i>2049 Diósd, Hunyadi út 8-9.<br>
+                (Paulus Közösségi Ház)
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm feature bg-white">
+            <div class="card-body text-center p-4">
+              <i class="bi bi-person-heart fs-1 mb-3 d-block" style="color: var(--brand-gold);"></i>
+              <h5 class="fw-bold mb-3">Vasárnapi Iskola</h5>
+              <p class="mb-2">Gyermekeknek</p>
+              <p class="small text-muted mb-0">Vasárnaponként 9:10 és 9:45 között, az Istentiszteletet megelőzően.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm feature bg-white">
+            <div class="card-body text-center p-4">
+              <i class="bi bi-people-fill fs-1 mb-3 d-block" style="color: var(--brand-gold);"></i>
+              <h5 class="fw-bold mb-3">Férfi- és Női alkalmak</h5>
+              <p class="mb-2">Közösségépítés</p>
+              <p class="small text-muted mb-0">Havonta egyszer tartjuk. A pontos időpontokért kérjük, érdeklődjön elérhetőségeinken.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="vezetoseg" class="section">
+    <div class="container">
+      <h2 class="section-title text-center">Vezetőségünk</h2>
+      <div class="section-underline"></div>
+
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-4 order-2 order-md-1">
+          <div class="card team-card h-100">
+            <img src="img/FB.jpg" class="team-photo w-100" alt="Dóczy Ferenc">
+            <div class="card-body">
+              <span class="badge badge-role mb-2">kormányzó presbiter</span>
+              <h5 class="fw-bold mb-2">Dóczy Ferenc</h5>
+              <p class="mb-0 content">Ferenc 2013-óta tagja a diósdi Szentháromság Evangéliumi Gyülekezetnek. 2021-ben iktatták be presbiternek. A gyülekezet meghatározó alakja és lojális tagja, aki példamutató életével szolgál a gyülekezetben. Érden él feleségével és négy gyermekükkel.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 order-1 order-md-2">
+          <div class="card team-card h-100">
+            <img src="img/AB.jpg" class="team-photo w-100" alt="Hajdú Attila">
+            <div class="card-body">
+              <span class="badge badge-role mb-2">lelkipásztor</span>
+              <h5 class="fw-bold mb-2">Hajdú Attila</h5>
+              <p class="mb-0 content">Történelem és amerikanisztika szakon diplomázott Szegeden, majd református vallástanári tanulmányokat folytatott. 2010-ben sikeresen teljesítette a CREC ordinációs vizsgáját, és novemberben felszentelték a poznani CREC gyülekezetben. 2002 óta Diósdon él feleségével és öt gyermekével.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 order-3">
+          <div class="card team-card h-100">
+            <img src="img/BB.jpg" class="team-photo w-100" alt="Dr. Bogumił Jarmulak">
+            <div class="card-body">
+              <span class="badge badge-role mb-2">ideiglenes presbiter</span>
+              <h5 class="fw-bold mb-2">Dr. Bogumił Jarmulak</h5>
+              <p class="mb-0 content">2000-ben szentelték fel, a Varsói Keresztyény Teológiai Akadémián szerzett doktori fokozatot. A Jan Hus Egyházkerület (CREC) elnöke. A Kelet-Európai Közös Projekt területi koordinátora. Felesége és három gyermeke van.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="history" class="section" style="background:#fafbfc;">
+    <div class="container">
+      <h2 class="section-title text-center">A gyülekezetünk rövid története</h2>
+      <div class="section-underline"></div>
+
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-6">
+          <img src="img/gyuli.png" class="cover-img" alt="Gyülekezet épülete" />
+        </div>
+        <div class="col-lg-6">
+          <div class="content">
+            <p>A Communion of Reformed Evangelical Churches (CREC) 2007 óta van jelen Magyarországon. A Szentháromság Evangéliumi Gyülekezet 2013-ig misszióként létezett, majd missziós gyülekezetként 2021-ig tevékenykedett Ezt követően sikeresen partikularizálódott és önállóvá gyülekezetté vált a CREC alkotmányának megfelelően. Egyházkormányzati szempontból presbiteriánusok vagyunk és a CREC „Husz János” nevű egyházkerületébe tartozunk.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="creeds" class="section">
+    <div class="container">
+      <h2 class="section-title text-center">Hitvallásaink</h2>
+      <div class="section-underline"></div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch">
+          <div class="card w-100">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex align-items-center gap-2 mb-2"><i class="bi bi-book" style="color:var(--brand-gold)"></i><h5 class="mb-0">Heidelbergi Káté</h5></div>
+              <p class="mb-2 text-muted">1563</p>
+              <p class="content flex-grow-1"></p>
+              <a class="btn btn-sm btn-outline-dark mt-auto" href="pdfs/hk.pdf" target="_blank"><i class="bi bi-box-arrow-up-right me-1"></i>Teljes szöveg (PDF)</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch">
+          <div class="card w-100">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex align-items-center gap-2 mb-2"><i class="bi bi-file-text" style="color:var(--brand-gold)"></i><h5 class="mb-0">II. Helvét Hitvallás</h5></div>
+              <p class="mb-2 text-muted">1566</p>
+              <p class="content flex-grow-1"></p>
+              <a class="btn btn-sm btn-outline-dark mt-auto" href="pdfs/2h.pdf" target="_blank"><i class="bi bi-box-arrow-up-right me-1"></i>Teljes szöveg (PDF)</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch">
+          <div class="card w-100">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex align-items-center gap-2 mb-2"><i class="bi bi-file-earmark-text" style="color:var(--brand-gold)"></i><h5 class="mb-0">Belga Hitvallás</h5></div>
+              <p class="mb-2 text-muted">1561</p>
+              <p class="content flex-grow-1"></p>
+              <a class="btn btn-sm btn-outline-dark mt-auto" href="pdfs/bh.pdf" target="_blank"><i class="bi bi-box-arrow-up-right me-1"></i>Teljes szöveg (PDF)</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch">
+          <div class="card w-100">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex align-items-center gap-2 mb-2"><i class="bi bi-list-ol" style="color:var(--brand-gold)"></i><h5 class="mb-0">Dordrechti Kánonok</h5></div>
+              <p class="mb-2 text-muted">1618–1619</p>
+              <p class="content flex-grow-1"></p>
+              <a class="btn btn-sm btn-outline-dark mt-auto" href="pdfs/dk.pdf" target="_blank"><i class="bi bi-box-arrow-up-right me-1"></i>Teljes szöveg (PDF)</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="crec" class="section" style="background:#fafbfc;">
+    <div class="container">
+      <h2 class="section-title text-center">Mi a CREC?</h2>
+      <div class="section-underline"></div>
+
+      <div class="row g-4 crec-section-row">
+        <div class="col-lg-6 d-flex align-items-center">
+            <img src="img/CREC.png" class="crec-logo" alt="CREC logó" />
+        </div>
+        <div class="col-lg-6">
+          <div class="content">
+            <p>A CREC nem általános református szervezetként létezik, hanem olyan egyházként, amely elkötelezett a gazdag teológia, a szövetséges élet és a kulturális engedelmesség integrációja iránt. A széttagoltság korában a CREC koherens víziót kínál: az Ige-központú, a családba integrált és az Isten országára orientált.</p>
+            <p>A CREC nem csupán konzervatív a tanításában, hanem konstruktív a küldetésében is. Nem arra törekszik, hogy a reformációt a 16. században megfagyassza, hanem arra, hogy tovább vigye, hűen alkalmazva a Szentírás elveit az élet minden területén. Ez azt jelenti, hogy megkülönböztető jegyei nem önkényes preferenciák, hanem gondosan megfogalmazott meggyőződések, amelyek az egyház egészségét és küldetését szolgálják.</p>
+
+            <div class="accordion mt-3" id="crecAcc">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="c1">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#crec1" aria-expanded="false" aria-controls="crec1">• Szövetségmegújító istentisztelet</button>
+                </h2>
+                <div id="crec1" class="accordion-collapse collapse" aria-labelledby="c1" data-bs-parent="#crecAcc">
+                  <div class="accordion-body content">Liturgiánk az evangélium mintáját tükrözi: Isten szól, mi válaszolunk. A bűnvallás, a megszentelés, az úrvacsoravétel és a kiküldetés formája nem valami újdonság, hanem normatív. A Szentírásból származik, és célja, hogy érett, szövetséget megtartó imádókat formáljon, akik a hét többi hat napján is megélik hitüket.</div>
+                </div>
+              </div>
+
+              <div class="accordion-item mt-3">
+                <h2 class="accordion-header" id="c2">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#crec2" aria-expanded="false" aria-controls="crec2">• Gyermekúrvacsora</button>
+                </h2>
+                <div id="crec2" class="accordion-collapse collapse" aria-labelledby="c2" data-bs-parent="#crecAcc">
+                  <div class="accordion-body content">A szövetségbe való befogadásról alkotott meggyőződésünknek megfelelően, a megkeresztelt gyermekeket is szívesen fogadjuk az Úr asztalához. Ez tanúsítja Isten vendégszeretetét és szövetségi hűségét. Emlékeztet arra, hogy a kegyelem nem kognitív alkalmassággal érdemelhető ki, hanem Krisztussal való egység által adatik.</div>
+                </div>
+              </div>
+
+              <div class="accordion-item mt-3">
+                <h2 class="accordion-header" id="c3">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#crec3" aria-expanded="false" aria-controls="crec3">• Posztmillenniumi remény</button>
+                </h2>
+                <div id="crec3" class="accordion-collapse collapse" aria-labelledby="c3" data-bs-parent="#crecAcc">
+                  <div class="accordion-body content">Hiszünk abban, hogy Krisztus királysága nem hanyatlik, hanem terjed. Az evangélium tanítványokká teszi a nemzeteket. Ez határozza meg, hogyan viszonyulunk a világhoz – nem félelemmel és visszahúzódással, hanem bátorsággal és magabiztossággal. Az oktatás, a politika, az üzleti élet és a művészetek nem tabu területek, hanem az evangélium mindent megkelesztő kovászának színterei.</div>
+                </div>
+              </div>
+
+              <div class="accordion-item mt-3">
+                <h2 class="accordion-header" id="c4">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#crec4" aria-expanded="false" aria-controls="crec4">• Bibliai patriarchátus és családi integráció</button>
+                </h2>
+                <div id="crec4" class="accordion-collapse collapse" aria-labelledby="c4" data-bs-parent="#crecAcc">
+                  <div class="accordion-body content">Támogatjuk a férfiak családban és egyházban betöltött vezető szerepét, és támogatjuk a gyermekek bevonását az egyház életébe és istentiszteletébe. Elutasítjuk a család életének modern felosztását. Az otthonoknak kis egyházaknak kell lenniük, az egyházaknak pedig nagy családoknak.</div>
+                </div>
+              </div>
+              
+              <div class="accordion-item mt-3">
+                <h2 class="accordion-header" id="c5">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#crec5" aria-expanded="false" aria-controls="crec5">• Kulturális Elköteleződés</button>
+                </h2>
+                <div id="crec5" class="accordion-collapse collapse" aria-labelledby="c5" data-bs-parent="#crecAcc">
+                  <div class="accordion-body content">Krisztus uralma teljes. Arra törekszünk, hogy a Szentírás igazságát ne csak egyéni szívekre, hanem egész társadalmakra alkalmazzuk. Ez azt jelenti, hogy kidolgozunk egy jellegzetesen keresztyény nézetet a gazdaságról, az esztétikáról, az oktatásról, a polgári kormányzásról és a technológiai etikáról.</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="mt-3">
+              <a class="btn btn-outline-dark btn-sm" href="https://crechurches.org/" target="_blank">CREC honlap <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" class="section">
+    <div class="container text-center">
+      <div class="mb-3">
+        <a class="footer-link" href="https://www.facebook.com/szentharomsag.lelkesz" target="_blank" rel="noopener"><i class="bi bi-facebook fs-4"></i></a>
+        <a class="footer-link" href="https://www.youtube.com/@JezusKiraly" target="_blank" rel="noopener"><i class="bi bi-youtube fs-4"></i></a>
+        <a class="footer-link" href="mailto:szentharomsag.pasztor@gmail.com"><i class="bi bi-envelope fs-4"></i></a>
+      </div>
+      <p class="mb-1 fw-bold">Szentháromság Evangéliumi Gyülekezet</p>
+      <p class="mb-1">2049 Diósd, Hunyadi út 8-9. <span class="small text-white-50">(Paulus Közösségi Ház)</span></p>
+      <p class="mb-3">+36 70 251 4034 &nbsp;•&nbsp; <a class="footer-link" href="mailto:szentharomsag.pasztor@gmail.com">szentharomsag.pasztor@gmail.com</a></p>
+      <div class="small text-center my-2 my-md-0">Teremtés<span class="footer-dot">·</span>Kultúra<span class="footer-dot">·</span>Liturgia</div>
+      <p class="small mb-0 mt-3">© <span id="year"></span> – Minden jog fenntartva</p>
+    </div>
+  </footer>
+
+  <div class="modal fade" id="moveAnnouncementModal" tabindex="-1" aria-labelledby="moveAnnouncementModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border: 2px solid var(--brand-gold); border-radius: 12px; overflow: hidden;">
+        <div class="modal-header" style="background: var(--brand-dark); color: #fff; border-bottom: 1px solid rgba(255,222,89,.3);">
+          <h5 class="modal-title fw-bold" id="moveAnnouncementModalLabel" style="color: var(--brand-gold);">
+            <i class="bi bi-geo-alt-fill me-2"></i>Fontos Hír: Költözünk!
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Bezárás"></button>
+        </div>
+        <div class="modal-body p-4 content text-center">
+          <p class="mb-3 fs-5">Gyülekezetünk új helyszínre költözött!</p>
+          <p class="mb-0 fw-bold fs-5" style="color: var(--brand-dark);">
+            2049 Diósd, Hunyadi út 8-9.
+          </p>
+          <p class="text-muted small mb-0">(Paulus Közösségi Ház)</p>
+        </div>
+        <div class="modal-footer justify-content-center" style="border-top: none;">
+          <button type="button" class="btn fw-bold px-4" data-bs-dismiss="modal" style="background-color: var(--brand-gold); color: #111;">Rendben, megértettem</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button id="toTop" aria-label="Ugrás a lap tetejére" title="Vissza a tetejére"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const toTop = document.getElementById('toTop');
+    if (toTop) {
+      const onScroll = () => { window.scrollY > 300 ? toTop.classList.add('show') : toTop.classList.remove('show'); };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll('.accordion .accordion-collapse').forEach(el => el.classList.remove('show'));
+      
+      // JAVÍTVA: Külön kulcs a magyar változatnak
+      if (!sessionStorage.getItem('movePopupShown_hu')) {
+        const moveModal = new bootstrap.Modal(document.getElementById('moveAnnouncementModal'));
+        moveModal.show();
+        sessionStorage.setItem('movePopupShown_hu', 'true');
+      }
+    });
+  </script>
+</body>
+</html>

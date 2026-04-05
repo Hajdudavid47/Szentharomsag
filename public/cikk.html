@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  
+  <title>Teológiai Cikkek | Szentháromság Evangéliumi Gyülekezet | Diósd</title>
+  <meta name="description" content="Református teológiai cikkek, hitvallások és tanulmányok a diósdi Szentháromság Evangéliumi Gyülekezettől." />
+  <meta name="keywords" content="teológiai cikkek, református tanulmányok, hitvallás, Diósd gyülekezet">
+  <link rel="canonical" href="https://www.szentharomsag.com/cikk.html">
+
+  <link rel="icon" type="image/png" href="img/logo.png" sizes="32x32" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Church",
+    "name": "Szentháromság Evangéliumi Gyülekezet",
+    "url": "https://www.szentharomsag.com/cikk.html",
+    "logo": "https://www.szentharomsag.com/img/logo.png",
+    "description": "Teológiai cikkek és tanulmányok.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Szent István tér 5.",
+      "addressLocality": "Diósd",
+      "postalCode": "2049",
+      "addressCountry": "HU"
+    }
+  }
+  </script>
+</head>
+<body>
+  <nav class="navbar navbar-dark navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="img/logo.png" alt="Logo" />
+        <span>Szentháromság Evangéliumi Gyülekezet</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav" aria-controls="topNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="topNav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Főoldal</a></li>
+          <li class="nav-item"><a class="nav-link" href="pred.html">Igehirdetések és Közvetítések</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cikk.html">Cikkek</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Kapcsolat</a></li>
+          <li class="nav-item">
+             <a class="nav-link" href="cikk-en.html" title="Switch to English">EN</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h1 class="fw-bold display-5 mb-3" style="margin-top: 40px;">Teológiai Cikkek</h1>
+        <p class="lead text-muted">Tanulmányok · Írások · Hitvallás</p>
+        <div class="section-underline mx-auto mt-4"></div>
+      </div>
+      <div id="articles-container" class="row g-4">
+        <div class="col-12 text-center">
+            <div class="spinner-border text-secondary" role="status">
+                <span class="visually-hidden">Betöltés...</span>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="container text-center">
+      <div class="mb-3">
+        <a class="footer-link" href="https://www.facebook.com/szentharomsag.lelkesz" target="_blank"><i class="bi bi-facebook fs-4"></i></a>
+        <a class="footer-link" href="https://www.youtube.com/@JezusKiraly" target="_blank"><i class="bi bi-youtube fs-4"></i></a>
+        <a class="footer-link" href="mailto:szentharomsag.pasztor@gmail.com"><i class="bi bi-envelope fs-4"></i></a>
+      </div>
+      <p class="mb-1 fw-bold">Szentháromság Evangéliumi Gyülekezet</p>
+      <p class="mb-1">2049 Diósd, Hunyadi út 8-9. <span class="small text-white-50">(Paulus Közösségi Ház)</span></p>      <p class="mb-3">+36 70 251 4034 &nbsp;•&nbsp; <a class="footer-link" href="mailto:szentharomsag.pasztor@gmail.com">szentharomsag.pasztor@gmail.com</a></p>
+      <div class="small text-center my-2 my-md-0">Teremtés<span class="footer-dot">·</span>Kultúra<span class="footer-dot">·</span>Liturgia</div>
+      <p class="small mb-0 mt-3">© <span id="year"></span> – Minden jog fenntartva</p>
+    </div>
+  </footer>
+
+  <button id="toTop" aria-label="Ugrás a lap tetejére" title="Vissza a tetejére"><i class="bi bi-arrow-up"></i></button>
+
+  <div class="modal fade" id="pdfModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-desktop">
+      <div class="modal-content">
+        <div class="modal-header d-flex align-items-center">
+          <h5 class="modal-title flex-grow-1" id="pdfTitle">Dokumentum</h5>
+          <a id="pdfDownloadLink" href="#" target="_blank" class="btn btn-sm btn-outline-light me-2" title="Megnyitás teljes ablakban">
+            <i class="bi bi-box-arrow-up-right"></i> <span class="d-none d-sm-inline">Megnyitás</span>
+          </a>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Bezárás"></button>
+        </div>
+        <div class="modal-body">
+          <iframe id="pdfViewer" src=""></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const toTop = document.getElementById('toTop');
+    if (toTop) {
+      const onScroll = () => { window.scrollY > 300 ? toTop.classList.add('show') : toTop.classList.remove('show'); };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+    
+    async function loadArticles() {
+        const container = document.getElementById('articles-container');
+        try {
+            const res = await fetch('/articles');
+            const articles = await res.json();
+            if (!articles || articles.length === 0) {
+                container.innerHTML = '<div class="col-12 text-center"><p class="text-muted lead">Jelenleg nincsenek elérhető cikkek.</p></div>';
+                return;
+            }
+            container.innerHTML = articles.map(a => `
+                <div class="col-lg-6">
+                    <div class="article-card">
+                        <div class="article-title">${a.title}</div>
+                        <div class="article-meta">
+                            <i class="bi bi-person-circle me-1"></i> ${a.author || "Ismeretlen"}
+                        </div>
+                        <p class="article-abstract">${a.abstract || ""}</p>
+                        <div class="mt-auto text-end">
+                            <button class="btn btn-gold w-100 w-md-auto" onclick="handlePdfClick('${a.title}', '${a.pdf}')">
+                                <i class="bi bi-book-half me-2"></i> Olvass tovább
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        } catch (e) {
+            console.error(e);
+            container.innerHTML = '<div class="col-12 text-center"><p class="text-danger">Hiba történt a cikkek betöltésekor.</p></div>';
+        }
+    }
+
+    function handlePdfClick(title, filename) {
+        const pdfUrl = `/pdfs/${filename}`;
+        
+        if (window.innerWidth < 768) {
+            window.open(pdfUrl, '_blank');
+        } else {
+            document.getElementById('pdfTitle').textContent = title;
+            const viewer = document.getElementById('pdfViewer');
+            const downloadLink = document.getElementById('pdfDownloadLink');
+            
+            viewer.src = `${pdfUrl}#view=FitH`;
+            downloadLink.href = pdfUrl;
+            
+            new bootstrap.Modal(document.getElementById('pdfModal')).show();
+        }
+    }
+
+    const pdfModalEl = document.getElementById('pdfModal');
+    if (pdfModalEl) {
+        pdfModalEl.addEventListener('hidden.bs.modal', () => {
+            document.getElementById('pdfViewer').src = "";
+        });
+    }
+    loadArticles();
+  </script>
+</body>
+</html>

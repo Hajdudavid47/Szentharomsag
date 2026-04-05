@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.szentharomsag.com/</loc>
+    <lastmod>2025-01-20</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://www.szentharomsag.com/pred.html</loc>
+    <lastmod>2025-01-20</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.szentharomsag.com/cikk.html</loc>
+    <lastmod>2025-01-20</lastmod>
+    <priority>0.80</priority>
+  </url>
+   <url>
+    <loc>https://www.szentharomsag.com/index-en.html</loc>
+    <lastmod>2025-01-20</lastmod>
+    <priority>0.80</priority>
+  </url>
+</urlset>

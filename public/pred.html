@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Igehirdetések | Szentháromság Evangéliumi Gyülekezet</title>
+  <link rel="icon" href="../img/logo.png" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --brand-dark: #0e0f11;
+      --brand-gold: #ffde59;
+      --brand-light: #f8f9fa;
+    }
+    html { 
+      scroll-behavior: smooth;
+      scroll-padding-top: 70px;
+    }
+    body {
+      font-family: "Merriweather", serif;
+      background-color: #f8f9fa;
+      color: #0f1115;
+    }
+
+    .navbar { 
+      background: rgba(0,0,0,.85)!important; 
+      backdrop-filter: saturate(140%) blur(6px); 
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      height: 70px;
+    }
+    .navbar-brand {
+        flex-shrink: 1;
+        min-width: 0;
+        margin-right: 0.5rem;
+    }
+    .navbar-brand span {
+        white-space: normal;
+        word-break: break-word;
+        font-weight: 900; 
+    }
+    .navbar .nav-link { 
+        font-weight: 700; 
+        letter-spacing: .2px; 
+    }
+    .navbar .nav-link:hover,
+    .navbar .nav-link.active {
+        color: var(--brand-gold)!important; 
+        text-shadow: 0 0 6px rgba(255,222,89,.45); 
+    }
+    .lang-toggle {
+        color: rgba(255,255,255,.55);
+        padding: 0.5rem 0.5rem;
+        margin-left: 0.5rem;
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+    .lang-toggle:hover {
+        color: var(--brand-gold)!important;
+    }
+    @media (max-width: 991.98px) {
+        .navbar { height: auto; }
+        .navbar-brand span { font-size: 0.9rem; }
+    }
+    @media (max-width: 575.98px) {
+      .navbar-brand span { font-size: 0.8rem; }
+    }
+
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../img/cover.jpg') no-repeat center center/cover;
+      min-height: 40vh; /* Csökkentett magasság a videókhoz */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+    }
+    .hero h1 {
+        font-weight: 900;
+        text-shadow: 0 2px 18px rgba(0,0,0,.6);
+    }
+
+    .video-card {
+      transition: transform 0.3s ease;
+    }
+    .video-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    #live-video-container .card-title {
+        font-size: 1.5rem;
+    }
+    #live-video-container img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 0.375rem;
+    }
+
+    @media (min-width: 992px) {
+        .modal-2-3 {
+            --bs-modal-width: 66.7vw;
+        }
+    }
+    .video-embed {
+        aspect-ratio: 16 / 9;
+    }
+    .video-embed iframe {
+        width: 100%;
+        height: 100%;
+    }
+    .video-link {
+        cursor: pointer;
+    }
+
+    footer { 
+      background: #0c0d10; 
+      color: #e9eaed; 
+      padding: 48px 0; 
+    }
+    .footer-link { color: #e9eaed; text-decoration: none; margin: 0 10px; }
+    .footer-link:hover { color: var(--brand-gold); text-shadow: 0 0 8px rgba(255,222,89,.4); }
+    .footer-dot { opacity: .85; margin: 0 .35rem; }
+
+    #toTop { position: fixed; right: 16px; bottom: 16px; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(0,0,0,.2); background: #000; color: #fff; display: grid; place-content: center; box-shadow: 0 10px 28px rgba(0,0,0,.25); cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(12px); transition: all .2s; z-index: 1030; }
+    #toTop.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    #toTop:hover { background: var(--brand-gold); color: #111; border-color: var(--brand-gold); box-shadow: 0 0 22px rgba(255,222,89,.35); }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D376DPET82"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-D376DPET82');
+  </script>
+</head>
+
+<body>
+  <nav class="navbar navbar-dark navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 flex-grow-1" href="/index.html">
+        <img src="../img/logo.png" alt="Logo" height="28" />
+        <span class="fw-black">Szentháromság Evangéliumi Gyülekezet</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav" aria-controls="topNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="topNav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/index.html">Főoldal</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/pred.html">Igehirdetések és Közvetítések</a></li>
+          <li class="nav-item"><a class="nav-link" href="/cikk.html">Cikkek</a></li>
+          <li class="nav-item"><a class="nav-link" href="/index.html#contact">Kapcsolat</a></li>
+          <li class="nav-item">
+            <a class="nav-link lang-toggle" href="/pred-en.html" title="Switch to English">EN</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <h1 class="display-4">Igehirdetések és Közvetítések</h1>
+    </div>
+  </section>
+
+  <div id="live-video-container" class="container text-center pt-5">
+  </div>
+
+  <main class="container py-5">
+    <h2 class="text-center mb-4" style="font-weight: 700;">Legutóbbi Igehirdetések</h2>
+    <div id="video-gallery" class="row g-4 text-center">
+      <p class="text-muted">Videók betöltése...</p>
+    </div>
+
+    <div id="load-more-container" class="text-center mt-4" style="display: none;">
+      <button id="load-more-btn" class="btn btn-outline-dark btn-lg fw-bold" style="border-color: var(--brand-gold);">Több videó betöltése</button>
+    </div>
+  </main>
+
+  <footer id="contact" class="section" style="padding-top: 48px; padding-bottom: 48px;">
+    <div class="container text-center">
+      <div class="mb-3">
+        <a class="footer-link" href="https://www.facebook.com/szentharomsag.lelkesz" target="_blank" rel="noopener"><i class="bi bi-facebook fs-4"></i></a>
+        <a class="footer-link" href="https://www.youtube.com/@JezusKiraly" target="_blank" rel="noopener"><i class="bi bi-youtube fs-4"></i></a>
+        <a class="footer-link" href="mailto:szentharomsag.pasztor@gmail.com"><i class="bi bi-envelope fs-4"></i></a>
+      </div>
+      <p class="mb-1 fw-bold">Szentháromság Evangéliumi Gyülekezet</p>
+      <p class="mb-1">2049 Diósd, Hunyadi út 8-9. <span class="small text-white-50">(Paulus Közösségi Ház)</span></p>
+      <p class="mb-3">+36 70 251 4034 &nbsp;•&nbsp; <a class="footer-link" href="mailto:szentharomsag.pasztor@gmail.com">szentharomsag.pasztor@gmail.com</a></p>
+      <div class="small text-center my-2 my-md-0">Teremtés<span class="footer-dot">·</span>Kultúra<span class="footer-dot">·</span>Liturgia</div>
+      <p class="small mb-0 mt-3">© <span id="year"></span> – Minden jog fenntartva</p>
+    </div>
+  </footer>
+
+  <button id="toTop" aria-label="Ugrás a lap tetejére" title="Vissza a tetejére"><i class="bi bi-arrow-up"></i></button>
+
+  <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-2-3 modal-dialog-centered">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header border-secondary">
+          <h5 class="modal-title" id="videoModalLabel" style="color: var(--brand-gold);">Video Title</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0">
+          <div class="video-embed">
+            <iframe id="videoModalIframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    let currentPageToken = null;
+    const isMobile = window.innerWidth < 768;
+    
+    const gallery = document.getElementById("video-gallery");
+    const liveContainer = document.getElementById("live-video-container");
+    const loadMoreContainer = document.getElementById("load-more-container");
+    const loadMoreBtn = document.getElementById("load-more-btn");
+    const videoModalEl = document.getElementById('videoModal');
+    const videoModalIframe = document.getElementById('videoModalIframe');
+    const videoModalLabel = document.getElementById('videoModalLabel');
+
+    async function checkLiveStream() {
+      try {
+        const res = await fetch("/api/livestream");
+        const data = await res.json();
+        
+        if (data.isLive) {
+          const vid = data.videoId;
+          const title = data.title;
+          const thumb = data.thumbnail;
+          const link = `https://www.youtube.com/watch?v=${vid}`;
+          
+          liveContainer.innerHTML = `
+            <h2 class="fw-bold mb-3" style="color: #d9534f;"><i class="bi bi-broadcast me-2"></i>ÉLŐ KÖZVETÍTÉS</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card video-card h-100 shadow" style="border: 2px solid #d9534f;">
+                        <a class="video-link" href="${link}" data-video-id="${vid}" data-video-title="${title}" rel="noopener">
+                            <img src="${thumb}" class="card-img-top" alt="${title}">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">${title}</h5>
+                            <a class="btn btn-lg mt-2 video-link text-white" style="background-color: #d9534f;" href="${link}" data-video-id="${vid}" data-video-title="${title}" rel="noopener">
+                                Csatlakozás az élő adáshoz
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5">
+          `;
+          if (liveContainer.nextElementSibling) {
+            liveContainer.nextElementSibling.classList.remove('py-5');
+            liveContainer.nextElementSibling.classList.add('pt-0', 'pb-5');
+          }
+        } else {
+          liveContainer.innerHTML = ""; 
+        }
+      } catch (err) {
+        console.error("Livestream check failed", err);
+        liveContainer.innerHTML = ""; 
+      }
+    }
+
+    async function loadRecentVideos(token = '') {
+      let url = '/api/videos';
+      if (token) {
+        url += `?pageToken=${token}`;
+      }
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!token) {
+            gallery.innerHTML = ""; 
+        }
+
+        if (data.items && data.items.length > 0) {
+            appendVideosToGallery(data.items);
+        } else if (!token) {
+            gallery.innerHTML = "<p class='text-muted'>Nincsenek jelenleg elérhető videók.</p>";
+        }
+
+        updatePagination(data.nextPageToken);
+
+      } catch (err) {
+        console.error("Video loading failed", err);
+        if (!token) { 
+          gallery.innerHTML = "<p class='text-danger'>Nem sikerült betölteni a videókat.</p>";
+        }
+      }
+    }
+
+    function appendVideosToGallery(videos) {
+      const videoHtml = videos.map(v => {
+        const vid = v.id.videoId;
+        const title = v.snippet.title;
+        const thumb = v.snippet.thumbnails.high.url;
+        const link = `https://www.youtube.com/watch?v=${vid}`;
+        return `
+          <div class="col-md-4 col-sm-6">
+            <div class="card video-card h-100 shadow-sm border-0">
+              <a class="video-link" href="${link}" data-video-id="${vid}" data-video-title="${title}" rel="noopener">
+                <img src="${thumb}" class="card-img-top" alt="${title}" style="border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;">
+              </a>
+              <div class="card-body">
+                <h5 class="card-title h6 fw-bold">${title}</h5>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      gallery.innerHTML += videoHtml; 
+    }
+    
+    function updatePagination(nextToken) {
+      currentPageToken = nextToken || null;
+      if (currentPageToken) {
+        loadMoreContainer.style.display = "block";
+      } else {
+        loadMoreContainer.style.display = "none";
+      }
+    }
+
+    function setupVideoLinks() {
+        document.querySelectorAll('.video-link').forEach(link => {
+            if (isMobile) {
+                link.target = "_blank";
+            } else {
+                link.dataset.bsToggle = "modal";
+                link.dataset.bsTarget = "#videoModal";
+                link.href = "#"; 
+            }
+        });
+    }
+    
+    document.addEventListener("DOMContentLoaded", async () => {
+        await checkLiveStream(); 
+        await loadRecentVideos(); 
+        
+        setupVideoLinks(); 
+
+        const yearEl = document.getElementById('year');
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
+
+        const toTop = document.getElementById('toTop');
+        if (toTop) {
+            const onScroll = () => { window.scrollY > 300 ? toTop.classList.add('show') : toTop.classList.remove('show'); };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+    });
+
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener("click", async () => {
+            if (currentPageToken) {
+                await loadRecentVideos(currentPageToken);
+                setupVideoLinks(); 
+            }
+        });
+    }
+    
+    if (videoModalEl) {
+        videoModalEl.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget; 
+            if (!button) return; 
+            
+            const videoId = button.dataset.videoId;
+            const videoTitle = button.dataset.videoTitle;
+            
+            videoModalLabel.textContent = videoTitle;
+            videoModalIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        });
+    }
+
+    if (videoModalEl) {
+        videoModalEl.addEventListener('hidden.bs.modal', function () {
+            videoModalIframe.src = ""; 
+        });
+    }
+  </script>
+</body>
+</html>

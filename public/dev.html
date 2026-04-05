@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | PDF Feltöltés</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body class="bg-light">
+  
+  <nav class="navbar navbar-dark bg-dark mb-5">
+    <div class="container">
+      <span class="navbar-brand mb-0 h1">Szentháromság Admin</span>
+      <a href="/cikk.html" class="btn btn-outline-light btn-sm">Cikkek megtekintése</a>
+    </div>
+  </nav>
+
+  <div class="container" style="max-width: 800px;">
+    
+    <div class="card shadow-sm mb-5">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0"><i class="bi bi-upload me-2"></i>Új Cikk Feltöltése</h4>
+      </div>
+      <div class="card-body p-4">
+        <form id="uploadForm">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Cikk Címe</label>
+            <input type="text" class="form-control" name="title" required placeholder="Pl. Az istentisztelet">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Szerző</label>
+            <input type="text" class="form-control" name="author" required placeholder="Pl. Douglas Wilson">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Rövid leírás (Absztrakt)</label>
+            <textarea class="form-control" name="abstract" rows="3" required placeholder="Miről szól a cikk..."></textarea>
+          </div>
+          <div class="mb-4">
+            <label class="form-label fw-bold text-danger">PDF Fájl Kiválasztása</label>
+            <input type="file" class="form-control" name="pdf" accept="application/pdf" required>
+          </div>
+          
+          <button type="submit" class="btn btn-success w-100 btn-lg">Feltöltés</button>
+        </form>
+        
+        <div id="status" class="alert mt-3" style="display:none"></div>
+      </div>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-header">
+        <h5 class="mb-0">Feltöltött Cikkek</h5>
+      </div>
+      <div class="card-body">
+        <ul id="articleList" class="list-group list-group-flush">
+          <li class="list-group-item text-muted">Betöltés...</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 1. Cikkek listázása
+    async function loadArticles() {
+      try {
+        const res = await fetch('/articles');
+        if (!res.ok) throw new Error("Szerver hiba");
+        
+        const data = await res.json();
+        const list = document.getElementById('articleList');
+        
+        if (data.length === 0) {
+            list.innerHTML = '<li class="list-group-item text-muted text-center">Még nincsenek cikkek.</li>';
+            return;
+        }
+
+        list.innerHTML = data.map(a => `
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>${a.title}</strong> <br>
+              <small class="text-muted">${a.author}</small>
+            </div>
+            <button onclick="deleteArticle('${a.id}')" class="btn btn-outline-danger btn-sm">
+              <i class="bi bi-trash"></i>
+            </button>
+          </li>
+        `).join('');
+      } catch (err) {
+        console.error(err);
+        document.getElementById('articleList').innerHTML = '<li class="list-group-item text-danger">Hiba a lista betöltésekor.</li>';
+      }
+    }
+
+    // 2. Törlés
+    async function deleteArticle(id) {
+      if(!confirm('Biztosan törli ezt a cikket?')) return;
+      try {
+        const res = await fetch('/articles/' + id, { method: 'DELETE' });
+        if (res.ok) loadArticles();
+        else alert("Hiba a törlésnél");
+      } catch (err) { alert("Hiba történt"); }
+    }
+
+    // 3. Feltöltés
+    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = document.getElementById('status');
+      status.style.display = 'block';
+      status.className = 'alert alert-info';
+      status.textContent = 'Feltöltés folyamatban...';
+      
+      const formData = new FormData(e.target);
+
+      try {
+        const res = await fetch('/articles', { method: 'POST', body: formData });
+        const data = await res.json();
+        
+        if (res.ok) {
+          status.className = 'alert alert-success';
+          status.textContent = 'Sikeres feltöltés!';
+          e.target.reset();
+          loadArticles();
+          setTimeout(() => status.style.display = 'none', 3000);
+        } else {
+          throw new Error(data.message || "Ismeretlen hiba");
+        }
+      } catch (err) {
+        status.className = 'alert alert-danger';
+        status.textContent = `Hiba: ${err.message}`;
+      }
+    });
+
+    // Indításkor lista betöltése
+    loadArticles();
+  </script>
+</body>
+</html>

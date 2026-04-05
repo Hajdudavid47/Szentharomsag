@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Theological Articles | Trinity Gospel Church | Diósd</title>
+  <meta name="description" content="Christian theological articles and studies from Trinity Evangelical Church in Diósd.">
+  <link rel="canonical" href="https://www.szentharomsag.com/cikk-en.html">
+
+  <link rel="icon" type="image/png" href="img/logo.png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="img/logo.png" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Church",
+    "name": "Trinity Gospel Church",
+    "alternateName": "Szentháromság Evangéliumi Gyülekezet",
+    "url": "https://www.szentharomsag.com/cikk-en.html",
+    "logo": "https://www.szentharomsag.com/img/logo.png",
+    "description": "Theological articles and studies.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Szent István tér 5.",
+      "addressLocality": "Diósd",
+      "postalCode": "2049",
+      "addressCountry": "HU"
+    }
+  }
+  </script>
+</head>
+<body>
+  <nav class="navbar navbar-dark navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 flex-grow-1" href="/index-en.html">
+        <img src="img/logo.png" alt="Logo" height="28" />
+        <span class="fw-black">Trinity Gospel Church</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav" aria-controls="topNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="topNav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/index-en.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/pred-en.html">Sermons and Broadcasts</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/cikk-en.html">Articles</a></li>
+          <li class="nav-item"><a class="nav-link" href="/index-en.html#contact">Contact</a></li>
+          <li class="nav-item">
+            <a class="nav-link lang-toggle" href="/cikk.html" title="Váltás magyarra">HU</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-5 mt-5"> <h1 class="text-center mb-4">Theological Articles</h1>
+    <p class="text-center text-muted mb-5">More articles coming soon.</p>
+    <div id="articles-container">
+      </div>
+  </main>
+
+  <footer id="contact" class="section">
+    <div class="container text-center">
+      <div class="mb-3">
+        <a class="footer-link" href="https://www.facebook.com/szentharomsag.lelkesz" target="_blank" rel="noopener"><i class="bi bi-facebook fs-4"></i></a>
+        <a class="footer-link" href="https://www.youtube.com/@JezusKiraly" target="_blank" rel="noopener"><i class="bi bi-youtube fs-4"></i></a>
+        <a class="footer-link" href="mailto:szentharomsag.pasztor@gmail.com"><i class="bi bi-envelope fs-4"></i></a>
+      </div>
+      <p class="mb-1 fw-bold">Trinity Gospel Church</p>
+      <p class="mb-1">2049 Diósd, Hunyadi út 8-9. <span class="small text-white-50">(Paulus Közösségi Ház)</span></p>      <p class="mb-3">+36 70 251 4034 &nbsp;•&nbsp; <a class="footer-link" href="mailto:szentharomsag.pasztor@gmail.com">szentharomsag.pasztor@gmail.com</a></p>
+      <div class="small text-center my-2 my-md-0">Creation<span class="footer-dot">·</span>Culture<span class="footer-dot">·</span>Liturgy</div>
+      <p class="small mb-0 mt-3">© <span id="year"></span> – All rights reserved</p>
+    </div>
+  </footer>
+
+  <div class="modal fade" id="articleModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="articleModalLabel">Article Title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button id="toTop" aria-label="Scroll to top" title="Back to top"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+
+  <script>
+    // Static article data (English)
+    const articlesData = [
+      {
+        "id": "how-to-change-the-world-jbj-en",
+        "title": "How to Change the World (Part 1)",
+        "author": "James B. Jordan",
+        "abstract": "Jesus has told us that He intends all nations to be discipled. Nations. Not just individuals. All nations as theocracies. Worship is also holy war. God promises to change the world... when His people come into His presence during worship and pray for vengeance.",
+        "content": `
+          <p>Jesus has told us that He intends all nations to be discipled. Nations. Not just individuals. All nations as theocracies.</p>
+          <p>If you’re not doing that, you’re not a priest.</p>
+        `
+      },
+      {
+        "id": "worship-is-warfare-doug-wilson-en",
+        "title": "Worship is Warfare",
+        "author": "Douglas Wilson",
+        "abstract": "The kingdom refers to the rule and realm of Jesus Christ... There is another way... to recover an understanding of the centrality (and potency) of true worship. The worship of the church, rightly understood, is warfare... Our weapons are not carnal, but mighty through God...",
+        "content": `
+          <p>Whenever we think about the kingdom of God, and as we pray the Lord’s prayer...</p>
+        `
+      }
+    ];
+    // (Rest of the script is same as original but with optimizations if any needed - actually just defer on script tag handles it mostly)
+
+    // --- Load Article Cards ---
+    function loadArticleCards() {
+        const container = document.getElementById('articles-container');
+        if (!articlesData.length) {
+            container.innerHTML = '<p class="text-center text-muted">No articles available.</p>';
+            return;
+        }
+
+        container.innerHTML = articlesData.map(a => `
+            <div class="article-block">
+                <div class="article-title">${a.title}</div>
+                <div class="article-meta">
+                    Author: ${a.author || "Unknown"}
+                </div>
+                <p class="article-abstract">${a.abstract || ""}</p>
+                <div class="article-actions">
+                    <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#articleModal" data-article-id="${a.id}">
+                        <i class="bi bi-journal-text"></i> Read More
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // --- Attach Modal Listener ---
+    function attachModalListener() {
+        const modalElement = document.getElementById('articleModal');
+        
+        modalElement.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const articleId = button.getAttribute('data-article-id');
+            const article = articlesData.find(a => a.id === articleId);
+
+            if (article) {
+                const modalTitle = modalElement.querySelector('.modal-title');
+                const modalBody = modalElement.querySelector('.modal-body');
+                
+                modalTitle.textContent = article.title;
+                
+                // Meta HTML (No "Translated by" as requested)
+                const metaHtml = `
+                    <p class="article-meta-modal">
+                        <strong>Author:</strong> ${article.author || "Unknown"}
+                    </p>
+                `;
+                
+                modalBody.innerHTML = metaHtml + article.content;
+            }
+        });
+    }
+
+    // --- DOMContentLoaded listener ---
+    document.addEventListener("DOMContentLoaded", () => {
+        // Load articles
+        loadArticleCards();
+        attachModalListener();
+        
+        // Update Footer Year
+        const yearEl = document.getElementById('year');
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
+
+        // "To Top" Button
+        const toTop = document.getElementById('toTop');
+        if (toTop) {
+            const onScroll = () => { window.scrollY > 300 ? toTop.classList.add('show') : toTop.classList.remove('show'); };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+    });
+  </script>
+</body>
+</html>
