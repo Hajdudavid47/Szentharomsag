@@ -1,0 +1,307 @@
+/* ============================================================
+   SZENTHÁROMSÁG – ANIMATIONS
+   Scroll-triggered reveals, micro-interactions, transitions
+   ============================================================ */
+
+/* --- ENTRANCE ANIMATIONS --- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes goldPulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(255,222,89,.45); }
+  50%       { box-shadow: 0 0 28px rgba(255,222,89,.75); }
+}
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to   { background-position: 200% center; }
+}
+@keyframes navSlideDown {
+  from { opacity: 0; transform: translateY(-100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- HERO ENTRANCE (runs immediately on load) --- */
+.hero-animate .glass {
+  animation: scaleIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-animate .display-quote {
+  animation: fadeUp 0.9s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-animate .sublead {
+  animation: fadeUp 0.7s 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-animate .chip-row {
+  animation: fadeUp 0.7s 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-animate h1.display-4 {
+  animation: fadeUp 0.9s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* --- NAVBAR --- */
+.navbar {
+  animation: navSlideDown 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.navbar .nav-link {
+  position: relative;
+  transition: color 0.22s;
+}
+.navbar .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 50%;
+  width: 0; height: 2px;
+  background: var(--brand-gold);
+  border-radius: 2px;
+  transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1), left 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.navbar .nav-link:hover::after,
+.navbar .nav-link.active::after {
+  width: 80%; left: 10%;
+}
+
+/* --- SCROLL REVEAL (JS adds .revealed class) --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-28px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(28px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-scale.revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger children */
+.stagger-children > *:nth-child(1) { transition-delay: 0s; }
+.stagger-children > *:nth-child(2) { transition-delay: 0.08s; }
+.stagger-children > *:nth-child(3) { transition-delay: 0.16s; }
+.stagger-children > *:nth-child(4) { transition-delay: 0.24s; }
+.stagger-children > *:nth-child(5) { transition-delay: 0.32s; }
+.stagger-children > *:nth-child(6) { transition-delay: 0.40s; }
+.stagger-children > *:nth-child(7) { transition-delay: 0.48s; }
+
+/* --- SECTION TITLE underline animate --- */
+.section-underline {
+  transform-origin: center;
+  transition: transform 0.6s 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.6s 0.2s;
+}
+.reveal .section-underline,
+.section-underline.reveal {
+  transform: scaleX(0);
+  opacity: 0;
+}
+.reveal.revealed .section-underline,
+.section-underline.reveal.revealed {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+/* --- CARD HOVER ENHANCEMENTS --- */
+.team-card {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.team-card:hover {
+  transform: translateY(-6px) scale(1.01) !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,.15) !important;
+}
+
+.feature {
+  transition: border-color 0.22s, box-shadow 0.22s, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.feature:hover {
+  transform: translateY(-4px) !important;
+}
+
+.video-card {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.video-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 16px 40px rgba(0,0,0,.14) !important;
+}
+
+.article-card, .article-block {
+  transition: border-color 0.22s, box-shadow 0.22s,
+              transform 0.28s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.article-card:hover, .article-block:hover {
+  transform: translateY(-4px) !important;
+}
+
+/* --- CHIP HOVER --- */
+.chip {
+  transition: color 0.18s, background 0.18s, border-color 0.18s,
+              box-shadow 0.18s, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.chip:hover {
+  transform: translateY(-3px) scale(1.03) !important;
+}
+
+/* --- GOLD ACCENT pulse for live badge --- */
+.live-pulse {
+  animation: goldPulse 2s ease-in-out infinite;
+}
+
+/* --- SECTION UNDERLINE shimmer on hover (titles) --- */
+.section-title:hover + .section-underline,
+.section-title:focus + .section-underline {
+  animation: shimmer 1.2s linear;
+  background: linear-gradient(90deg,
+    var(--brand-gold) 20%,
+    #fff8c0 50%,
+    var(--brand-gold) 80%);
+  background-size: 200% auto;
+}
+
+/* --- ACCORDION --- */
+.accordion-button {
+  transition: background 0.2s, color 0.2s !important;
+}
+.accordion-collapse {
+  transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+/* --- TO-TOP BUTTON --- */
+#toTop {
+  transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+#toTop:hover {
+  transform: translateY(-3px) scale(1.08) !important;
+}
+
+/* --- FOOTER LINKS --- */
+.footer-link {
+  transition: color 0.18s, text-shadow 0.18s, transform 0.18s !important;
+  display: inline-block;
+}
+.footer-link:hover {
+  transform: translateY(-2px) !important;
+}
+
+/* --- PAGE TRANSITION FADE IN --- */
+body {
+  animation: fadeIn 0.4s ease both;
+}
+
+/* --- MODAL ENTER --- */
+.modal.fade .modal-dialog {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s !important;
+  transform: scale(0.96) translateY(10px) !important;
+}
+.modal.show .modal-dialog {
+  transform: scale(1) translateY(0) !important;
+}
+
+/* --- ANNOUNCEMENT BANNER (new system) --- */
+.announcement-banner {
+  background: linear-gradient(135deg, var(--brand-dark) 0%, #1a1b1f 100%);
+  border-bottom: 2px solid var(--brand-gold);
+  color: #fff;
+  padding: 10px 0;
+  position: relative;
+  z-index: 1025;
+  animation: fadeIn 0.5s 0.3s both;
+  overflow: hidden;
+}
+.announcement-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,222,89,.06) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+.announcement-banner .container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+.announcement-banner .ann-icon {
+  color: var(--brand-gold);
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.announcement-banner .ann-text {
+  flex: 1;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+.announcement-banner .ann-text a {
+  color: var(--brand-gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.announcement-banner .ann-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.5);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  transition: color 0.18s;
+  flex-shrink: 0;
+}
+.announcement-banner .ann-close:hover {
+  color: var(--brand-gold);
+}
+
+/* --- REDUCE MOTION --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

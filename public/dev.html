@@ -3,137 +3,510 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin | PDF Feltöltés</title>
+  <title>Admin Panel | Szentháromság</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    :root {
+      --brand-gold: #ffde59;
+      --brand-dark: #0e0f11;
+    }
+    body { background: #0f1115; color: #e9eaed; font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+    .admin-navbar {
+      background: #0e0f11;
+      border-bottom: 2px solid var(--brand-gold);
+      padding: 12px 0;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .admin-navbar .brand { font-weight: 900; color: var(--brand-gold); font-size: 1.1rem; letter-spacing: .5px; }
+    .admin-navbar .nav-tabs { border: none; gap: 4px; }
+    .admin-navbar .nav-tabs .nav-link {
+      border: none; border-radius: 8px; color: rgba(255,255,255,.55); font-weight: 600;
+      padding: 6px 16px; transition: all 0.18s;
+    }
+    .admin-navbar .nav-tabs .nav-link:hover { color: #fff; background: rgba(255,255,255,.08); }
+    .admin-navbar .nav-tabs .nav-link.active { background: var(--brand-gold); color: #111; }
+
+    .panel { display: none; padding: 32px 0; }
+    .panel.active { display: block; }
+
+    /* Cards */
+    .admin-card {
+      background: #1a1b1f;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .admin-card h5 { color: var(--brand-gold); font-weight: 800; margin-bottom: 16px; }
+
+    /* Form controls dark theme */
+    .form-control, .form-select, textarea {
+      background: #0f1115 !important;
+      border-color: rgba(255,255,255,.15) !important;
+      color: #e9eaed !important;
+      border-radius: 8px !important;
+    }
+    .form-control:focus, textarea:focus {
+      border-color: var(--brand-gold) !important;
+      box-shadow: 0 0 0 3px rgba(255,222,89,.15) !important;
+    }
+    .form-label { color: rgba(255,255,255,.7); font-weight: 600; font-size: 0.85rem; }
+    ::placeholder { color: rgba(255,255,255,.25) !important; }
+
+    /* Buttons */
+    .btn-gold { background: var(--brand-gold); color: #111; font-weight: 700; border: none; border-radius: 8px; }
+    .btn-gold:hover { background: #f0d040; color: #111; }
+    .btn-subtle { background: rgba(255,255,255,.07); color: #e9eaed; border: 1px solid rgba(255,255,255,.12); border-radius: 8px; font-weight: 600; }
+    .btn-subtle:hover { background: rgba(255,255,255,.12); color: #fff; }
+
+    /* Announcement list items */
+    .ann-item {
+      background: #0f1115;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: border-color 0.18s;
+    }
+    .ann-item.is-active { border-color: rgba(255,222,89,.4); }
+    .ann-item .ann-body { flex: 1; min-width: 0; }
+    .ann-item .ann-text-display { font-size: 0.95rem; color: #e9eaed; line-height: 1.5; word-break: break-word; }
+    .ann-item .ann-meta { font-size: 0.75rem; color: rgba(255,255,255,.35); margin-top: 4px; }
+    .ann-item .ann-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .status-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+    .status-dot.active { background: #4caf50; box-shadow: 0 0 8px rgba(76,175,80,.5); }
+    .status-dot.inactive { background: rgba(255,255,255,.2); }
+
+    /* Article list */
+    .article-item {
+      background: #0f1115;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .article-item .art-body { flex: 1; min-width: 0; }
+    .article-item .art-title { font-weight: 700; color: #e9eaed; font-size: 0.95rem; }
+    .article-item .art-meta { font-size: 0.78rem; color: rgba(255,255,255,.4); margin-top: 2px; }
+
+    /* Status messages */
+    .status-msg { border-radius: 8px; padding: 10px 14px; margin-top: 12px; font-size: 0.88rem; display: none; }
+    .status-msg.success { background: rgba(76,175,80,.15); border: 1px solid rgba(76,175,80,.3); color: #81c784; }
+    .status-msg.error { background: rgba(229,57,53,.15); border: 1px solid rgba(229,57,53,.3); color: #ef9a9a; }
+    .status-msg.info { background: rgba(255,222,89,.1); border: 1px solid rgba(255,222,89,.25); color: var(--brand-gold); }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 32px; color: rgba(255,255,255,.3); }
+    .empty-state i { font-size: 2.5rem; margin-bottom: 10px; display: block; }
+
+    /* Live indicator */
+    .live-badge { 
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(217,83,79,.15); border: 1px solid rgba(217,83,79,.4);
+      color: #ef9a9a; border-radius: 20px; padding: 3px 10px; font-size: 0.8rem; font-weight: 700;
+    }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #d9534f; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+    /* Edit inline */
+    .ann-edit-area { display: none; margin-top: 10px; }
+    .ann-edit-area.show { display: block; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0f1115; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 3px; }
+  </style>
 </head>
-<body class="bg-light">
-  
-  <nav class="navbar navbar-dark bg-dark mb-5">
-    <div class="container">
-      <span class="navbar-brand mb-0 h1">Szentháromság Admin</span>
-      <a href="/cikk.html" class="btn btn-outline-light btn-sm">Cikkek megtekintése</a>
+<body>
+
+  <nav class="admin-navbar">
+    <div class="container d-flex align-items-center gap-4 flex-wrap">
+      <span class="brand"><i class="bi bi-shield-lock-fill me-2"></i>Admin Panel</span>
+      <ul class="nav nav-tabs ms-auto" id="adminTabs">
+        <li class="nav-item"><button class="nav-link active" data-panel="announcements">
+          <i class="bi bi-megaphone me-1"></i>Bejelentések
+        </button></li>
+        <li class="nav-item"><button class="nav-link" data-panel="articles">
+          <i class="bi bi-file-earmark-pdf me-1"></i>Cikkek
+        </button></li>
+        <li class="nav-item"><button class="nav-link" data-panel="site">
+          <i class="bi bi-eye me-1"></i>Oldal
+        </button></li>
+      </ul>
+      <a href="/" target="_blank" class="btn btn-subtle btn-sm ms-2">
+        <i class="bi bi-box-arrow-up-right me-1"></i>Weboldal
+      </a>
     </div>
   </nav>
 
-  <div class="container" style="max-width: 800px;">
-    
-    <div class="card shadow-sm mb-5">
-      <div class="card-header bg-primary text-white">
-        <h4 class="mb-0"><i class="bi bi-upload me-2"></i>Új Cikk Feltöltése</h4>
+  <div class="container" style="max-width: 860px;">
+
+    <!-- ═══════════ ANNOUNCEMENTS PANEL ═══════════ -->
+    <div class="panel active" id="panel-announcements">
+
+      <div class="admin-card">
+        <h5><i class="bi bi-plus-circle me-2"></i>Új Bejelentés Létrehozása</h5>
+        <div class="mb-3">
+          <label class="form-label">Bejelentés szövege</label>
+          <textarea class="form-control" id="ann-text" rows="3"
+            placeholder="Pl. Gyülekezetünk új helyszínre költözött: 2049 Diósd, Hunyadi út 8-9. (Paulus Közösségi Ház)&#10;&#10;HTML linkek is használhatók: &lt;a href=&quot;/index.html#alkalmak&quot;&gt;Részletek&lt;/a&gt;"></textarea>
+          <div class="form-text" style="color: rgba(255,255,255,.3);">
+            HTML engedélyezett: &lt;a href="..."&gt;, &lt;strong&gt;, &lt;em&gt;
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+          <div class="form-check form-switch" style="padding-left: 2.5em;">
+            <input class="form-check-input" type="checkbox" id="ann-active-new" checked>
+            <label class="form-check-label" for="ann-active-new" style="color: rgba(255,255,255,.6);">
+              Azonnal aktív (megjelenik a weboldalon)
+            </label>
+          </div>
+          <button class="btn btn-gold ms-auto" id="ann-create-btn">
+            <i class="bi bi-plus-lg me-1"></i>Létrehozás
+          </button>
+        </div>
+        <div class="status-msg" id="ann-create-status"></div>
       </div>
-      <div class="card-body p-4">
-        <form id="uploadForm">
-          <div class="mb-3">
-            <label class="form-label fw-bold">Cikk Címe</label>
-            <input type="text" class="form-control" name="title" required placeholder="Pl. Az istentisztelet">
+
+      <div class="admin-card">
+        <h5><i class="bi bi-list-ul me-2"></i>Aktív & Archivált Bejelentések</h5>
+        <div id="ann-list">
+          <div class="empty-state"><i class="bi bi-hourglass-split"></i>Betöltés...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══════════ ARTICLES PANEL ═══════════ -->
+    <div class="panel" id="panel-articles">
+
+      <div class="admin-card">
+        <h5><i class="bi bi-upload me-2"></i>Új Cikk Feltöltése</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Cikk Címe *</label>
+            <input type="text" class="form-control" id="art-title" placeholder="Pl. Az istentisztelet">
           </div>
-          <div class="mb-3">
-            <label class="form-label fw-bold">Szerző</label>
-            <input type="text" class="form-control" name="author" required placeholder="Pl. Douglas Wilson">
+          <div class="col-md-6">
+            <label class="form-label">Szerző *</label>
+            <input type="text" class="form-control" id="art-author" placeholder="Pl. Douglas Wilson">
           </div>
-          <div class="mb-3">
-            <label class="form-label">Rövid leírás (Absztrakt)</label>
-            <textarea class="form-control" name="abstract" rows="3" required placeholder="Miről szól a cikk..."></textarea>
+          <div class="col-12">
+            <label class="form-label">Rövid leírás (Absztrakt) *</label>
+            <textarea class="form-control" id="art-abstract" rows="3" placeholder="Miről szól a cikk..."></textarea>
           </div>
-          <div class="mb-4">
-            <label class="form-label fw-bold text-danger">PDF Fájl Kiválasztása</label>
-            <input type="file" class="form-control" name="pdf" accept="application/pdf" required>
+          <div class="col-12">
+            <label class="form-label" style="color: #ef9a9a;">PDF Fájl *</label>
+            <input type="file" class="form-control" id="art-pdf" accept="application/pdf">
           </div>
-          
-          <button type="submit" class="btn btn-success w-100 btn-lg">Feltöltés</button>
-        </form>
-        
-        <div id="status" class="alert mt-3" style="display:none"></div>
+        </div>
+        <div class="mt-3">
+          <button class="btn btn-gold" id="art-upload-btn">
+            <i class="bi bi-cloud-upload me-1"></i>Feltöltés
+          </button>
+        </div>
+        <div class="status-msg" id="art-status"></div>
+      </div>
+
+      <div class="admin-card">
+        <h5><i class="bi bi-archive me-2"></i>Feltöltött Cikkek</h5>
+        <div id="art-list">
+          <div class="empty-state"><i class="bi bi-hourglass-split"></i>Betöltés...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══════════ SITE OVERVIEW PANEL ═══════════ -->
+    <div class="panel" id="panel-site">
+      <div class="admin-card">
+        <h5><i class="bi bi-broadcast me-2"></i>Élő Közvetítés Állapota</h5>
+        <div id="live-status-display">
+          <div class="empty-state"><i class="bi bi-hourglass-split"></i>Ellenőrzés...</div>
+        </div>
+        <button class="btn btn-subtle btn-sm mt-3" id="check-live-btn">
+          <i class="bi bi-arrow-clockwise me-1"></i>Frissítés
+        </button>
+      </div>
+
+      <div class="admin-card">
+        <h5><i class="bi bi-link-45deg me-2"></i>Gyors Hivatkozások</h5>
+        <div class="d-flex flex-wrap gap-2">
+          <a href="/" target="_blank" class="btn btn-subtle btn-sm"><i class="bi bi-house me-1"></i>Főoldal (HU)</a>
+          <a href="/index-en.html" target="_blank" class="btn btn-subtle btn-sm"><i class="bi bi-house me-1"></i>Főoldal (EN)</a>
+          <a href="/pred.html" target="_blank" class="btn btn-subtle btn-sm"><i class="bi bi-play-circle me-1"></i>Igehirdetések</a>
+          <a href="/cikk.html" target="_blank" class="btn btn-subtle btn-sm"><i class="bi bi-journal me-1"></i>Cikkek</a>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h5><i class="bi bi-info-circle me-2"></i>Rendszer Információ</h5>
+        <div id="sys-info" style="color: rgba(255,255,255,.5); font-size: 0.85rem; line-height: 2;">
+          <div>Bejelentések DB: <span id="info-ann-count" class="text-white">—</span></div>
+          <div>Cikkek DB: <span id="info-art-count" class="text-white">—</span></div>
+          <div>Szerver idő: <span id="info-time" class="text-white">—</span></div>
+        </div>
       </div>
     </div>
 
-    <div class="card shadow-sm">
-      <div class="card-header">
-        <h5 class="mb-0">Feltöltött Cikkek</h5>
-      </div>
-      <div class="card-body">
-        <ul id="articleList" class="list-group list-group-flush">
-          <li class="list-group-item text-muted">Betöltés...</li>
-        </ul>
-      </div>
-    </div>
+  </div><!-- /container -->
 
-  </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // 1. Cikkek listázása
-    async function loadArticles() {
-      try {
-        const res = await fetch('/articles');
-        if (!res.ok) throw new Error("Szerver hiba");
-        
-        const data = await res.json();
-        const list = document.getElementById('articleList');
-        
-        if (data.length === 0) {
-            list.innerHTML = '<li class="list-group-item text-muted text-center">Még nincsenek cikkek.</li>';
-            return;
-        }
+  // ─────────── TAB NAVIGATION ───────────
+  document.querySelectorAll('#adminTabs .nav-link').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#adminTabs .nav-link').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+      if (btn.dataset.panel === 'site') loadSiteInfo();
+    });
+  });
 
-        list.innerHTML = data.map(a => `
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <div>
-              <strong>${a.title}</strong> <br>
-              <small class="text-muted">${a.author}</small>
+  // ─────────── UTILITY ───────────
+  function showMsg(el, type, text, duration = 4000) {
+    el.className = 'status-msg ' + type;
+    el.textContent = text;
+    el.style.display = 'block';
+    if (duration) setTimeout(() => el.style.display = 'none', duration);
+  }
+
+  function formatDate(ts) {
+    return new Date(ts).toLocaleString('hu-HU', { dateStyle: 'short', timeStyle: 'short' });
+  }
+
+  // ─────────── ANNOUNCEMENTS ───────────
+  async function loadAnnouncements() {
+    const list = document.getElementById('ann-list');
+    try {
+      const res = await fetch('/api/announcements/all');
+      const data = await res.json();
+      if (!data.length) {
+        list.innerHTML = '<div class="empty-state"><i class="bi bi-megaphone"></i>Még nincs bejelentés.</div>';
+        return;
+      }
+      list.innerHTML = data.map(a => `
+        <div class="ann-item ${a.active ? 'is-active' : ''}" id="ann-${a.id}">
+          <div class="status-dot ${a.active ? 'active' : 'inactive'}" title="${a.active ? 'Aktív' : 'Inaktív'}"></div>
+          <div class="ann-body">
+            <div class="ann-text-display">${a.text}</div>
+            <div class="ann-meta">
+              ${a.active ? '<span style="color:#81c784;font-weight:700;">● Aktív</span>' : '<span style="color:rgba(255,255,255,.3);">○ Inaktív</span>'}
+              &nbsp;·&nbsp; Létrehozva: ${formatDate(a.createdAt)}
             </div>
-            <button onclick="deleteArticle('${a.id}')" class="btn btn-outline-danger btn-sm">
+            <div class="ann-edit-area" id="edit-${a.id}">
+              <textarea class="form-control mt-2" id="edit-text-${a.id}" rows="2">${a.text}</textarea>
+              <div class="d-flex gap-2 mt-2">
+                <button class="btn btn-gold btn-sm" onclick="saveEdit('${a.id}')">
+                  <i class="bi bi-check-lg me-1"></i>Mentés
+                </button>
+                <button class="btn btn-subtle btn-sm" onclick="toggleEdit('${a.id}')">Mégse</button>
+              </div>
+            </div>
+          </div>
+          <div class="ann-actions">
+            <button class="btn btn-subtle btn-sm" onclick="toggleEdit('${a.id}')" title="Szerkesztés">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-subtle btn-sm" onclick="toggleActive('${a.id}', ${!a.active})" 
+              title="${a.active ? 'Kikapcsolás' : 'Bekapcsolás'}"
+              style="${a.active ? 'color:#81c784;' : 'color:rgba(255,255,255,.35);'}">
+              <i class="bi bi-${a.active ? 'toggle-on' : 'toggle-off'}"></i>
+            </button>
+            <button class="btn btn-subtle btn-sm" onclick="deleteAnn('${a.id}')" title="Törlés" style="color:#ef9a9a;">
               <i class="bi bi-trash"></i>
             </button>
-          </li>
-        `).join('');
-      } catch (err) {
-        console.error(err);
-        document.getElementById('articleList').innerHTML = '<li class="list-group-item text-danger">Hiba a lista betöltésekor.</li>';
+          </div>
+        </div>
+      `).join('');
+    } catch (e) {
+      list.innerHTML = '<div class="empty-state" style="color:#ef9a9a;"><i class="bi bi-exclamation-triangle"></i>Hiba a betöltéskor.</div>';
+    }
+  }
+
+  document.getElementById('ann-create-btn').addEventListener('click', async () => {
+    const text = document.getElementById('ann-text').value.trim();
+    const active = document.getElementById('ann-active-new').checked;
+    const statusEl = document.getElementById('ann-create-status');
+    if (!text) { showMsg(statusEl, 'error', 'A szöveg nem lehet üres!'); return; }
+    try {
+      const res = await fetch('/api/announcements', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, active })
+      });
+      if (!res.ok) throw new Error();
+      showMsg(statusEl, 'success', '✓ Bejelentés létrehozva!');
+      document.getElementById('ann-text').value = '';
+      document.getElementById('ann-active-new').checked = true;
+      loadAnnouncements();
+    } catch {
+      showMsg(statusEl, 'error', 'Hiba a létrehozáskor.');
+    }
+  });
+
+  function toggleEdit(id) {
+    const area = document.getElementById('edit-' + id);
+    area.classList.toggle('show');
+  }
+
+  async function saveEdit(id) {
+    const text = document.getElementById('edit-text-' + id).value.trim();
+    if (!text) return;
+    try {
+      await fetch('/api/announcements/' + id, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+      loadAnnouncements();
+    } catch { alert('Hiba a mentéskor'); }
+  }
+
+  async function toggleActive(id, active) {
+    try {
+      await fetch('/api/announcements/' + id, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ active })
+      });
+      loadAnnouncements();
+    } catch { alert('Hiba'); }
+  }
+
+  async function deleteAnn(id) {
+    if (!confirm('Biztosan törli ezt a bejelentést?')) return;
+    try {
+      await fetch('/api/announcements/' + id, { method: 'DELETE' });
+      loadAnnouncements();
+    } catch { alert('Hiba a törlésnél'); }
+  }
+
+  // ─────────── ARTICLES ───────────
+  async function loadArticles() {
+    const list = document.getElementById('art-list');
+    try {
+      const res = await fetch('/articles');
+      const data = await res.json();
+      if (!data.length) {
+        list.innerHTML = '<div class="empty-state"><i class="bi bi-file-earmark-pdf"></i>Még nincsenek cikkek.</div>';
+        return;
       }
+      list.innerHTML = data.map(a => `
+        <div class="article-item">
+          <i class="bi bi-file-earmark-pdf-fill fs-4" style="color: var(--brand-gold); flex-shrink:0;"></i>
+          <div class="art-body">
+            <div class="art-title">${a.title}</div>
+            <div class="art-meta">${a.author} &nbsp;·&nbsp; ${a.date}</div>
+          </div>
+          <div class="d-flex gap-2">
+            <a href="/pdfs/${a.pdf}" target="_blank" class="btn btn-subtle btn-sm" title="Megnyitás">
+              <i class="bi bi-eye"></i>
+            </a>
+            <button onclick="deleteArticle('${a.id}')" class="btn btn-subtle btn-sm" style="color:#ef9a9a;" title="Törlés">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    } catch {
+      list.innerHTML = '<div class="empty-state" style="color:#ef9a9a;"><i class="bi bi-exclamation-triangle"></i>Hiba.</div>';
+    }
+  }
+
+  document.getElementById('art-upload-btn').addEventListener('click', async () => {
+    const statusEl = document.getElementById('art-status');
+    const title = document.getElementById('art-title').value.trim();
+    const author = document.getElementById('art-author').value.trim();
+    const abstract = document.getElementById('art-abstract').value.trim();
+    const pdfFile = document.getElementById('art-pdf').files[0];
+    if (!title || !author || !abstract || !pdfFile) {
+      showMsg(statusEl, 'error', 'Minden mező kitöltése kötelező!'); return;
+    }
+    showMsg(statusEl, 'info', 'Feltöltés folyamatban...', 0);
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('author', author);
+    formData.append('abstract', abstract);
+    formData.append('pdf', pdfFile);
+    try {
+      const res = await fetch('/articles', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (res.ok) {
+        showMsg(statusEl, 'success', '✓ ' + data.message);
+        document.getElementById('art-title').value = '';
+        document.getElementById('art-author').value = '';
+        document.getElementById('art-abstract').value = '';
+        document.getElementById('art-pdf').value = '';
+        loadArticles();
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (err) {
+      showMsg(statusEl, 'error', 'Hiba: ' + err.message);
+    }
+  });
+
+  async function deleteArticle(id) {
+    if (!confirm('Biztosan törli ezt a cikket?')) return;
+    try {
+      const res = await fetch('/articles/' + id, { method: 'DELETE' });
+      if (res.ok) loadArticles(); else alert('Hiba a törlésnél');
+    } catch { alert('Hiba történt'); }
+  }
+
+  // ─────────── SITE INFO ───────────
+  async function loadSiteInfo() {
+    // Check livestream
+    const liveEl = document.getElementById('live-status-display');
+    try {
+      const res = await fetch('/api/livestream');
+      const data = await res.json();
+      if (data.isLive) {
+        liveEl.innerHTML = `
+          <div class="d-flex align-items-center gap-3">
+            <span class="live-badge"><span class="live-dot"></span>ÉLŐ ADÁS</span>
+            <span style="color:rgba(255,255,255,.7);font-size:.9rem;">${data.title || 'Cím nélkül'}</span>
+          </div>
+          <a href="https://www.youtube.com/watch?v=${data.videoId}" target="_blank" class="btn btn-subtle btn-sm mt-2">
+            <i class="bi bi-youtube me-1"></i>Megtekintés YouTube-on
+          </a>
+        `;
+      } else {
+        liveEl.innerHTML = '<span style="color:rgba(255,255,255,.3);">Jelenleg nincs élő adás.</span>';
+      }
+    } catch {
+      liveEl.innerHTML = '<span style="color:#ef9a9a;">Nem sikerült ellenőrizni.</span>';
     }
 
-    // 2. Törlés
-    async function deleteArticle(id) {
-      if(!confirm('Biztosan törli ezt a cikket?')) return;
-      try {
-        const res = await fetch('/articles/' + id, { method: 'DELETE' });
-        if (res.ok) loadArticles();
-        else alert("Hiba a törlésnél");
-      } catch (err) { alert("Hiba történt"); }
-    }
+    // Counts
+    try {
+      const [anns, arts] = await Promise.all([
+        fetch('/api/announcements/all').then(r => r.json()),
+        fetch('/articles').then(r => r.json())
+      ]);
+      document.getElementById('info-ann-count').textContent = anns.length + ' db (aktív: ' + anns.filter(a=>a.active).length + ')';
+      document.getElementById('info-art-count').textContent = arts.length + ' db';
+    } catch {}
 
-    // 3. Feltöltés
-    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const status = document.getElementById('status');
-      status.style.display = 'block';
-      status.className = 'alert alert-info';
-      status.textContent = 'Feltöltés folyamatban...';
-      
-      const formData = new FormData(e.target);
+    document.getElementById('info-time').textContent = new Date().toLocaleString('hu-HU');
+  }
 
-      try {
-        const res = await fetch('/articles', { method: 'POST', body: formData });
-        const data = await res.json();
-        
-        if (res.ok) {
-          status.className = 'alert alert-success';
-          status.textContent = 'Sikeres feltöltés!';
-          e.target.reset();
-          loadArticles();
-          setTimeout(() => status.style.display = 'none', 3000);
-        } else {
-          throw new Error(data.message || "Ismeretlen hiba");
-        }
-      } catch (err) {
-        status.className = 'alert alert-danger';
-        status.textContent = `Hiba: ${err.message}`;
-      }
-    });
+  document.getElementById('check-live-btn').addEventListener('click', loadSiteInfo);
 
-    // Indításkor lista betöltése
-    loadArticles();
+  // ─────────── INIT ───────────
+  loadAnnouncements();
+  loadArticles();
   </script>
 </body>
 </html>
