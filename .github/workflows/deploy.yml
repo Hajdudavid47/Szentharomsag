@@ -23,8 +23,7 @@ jobs:
 
       - name: Execute Remote SSH Deployment
         run: |
-          # Connects through your Cloudflare Tunnel to pull code and restart PM2
-          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
-          -o ProxyCommand="cloudflared access ssh --hostname %h" \
-          ${{ secrets.SERVER_USER }}@${{ secrets.SSH_HOST }} \
-          "cd /var/www/my-node-app/backend && git fetch --all && git reset --hard origin/main && npm install && pm2 restart szentharomsag-api"
+              ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
+              -o ProxyCommand="cloudflared access ssh --hostname %h" \
+              ${{ secrets.SERVER_USER }}@${{ secrets.SSH_HOST }} \
+              "cd /var/www/my-node-app && echo 'YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }}' > .env && cd backend && git fetch --all && git reset --hard origin/main && npm install && pm2 restart szentharomsag-api"
